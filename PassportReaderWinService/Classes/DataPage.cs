@@ -2,53 +2,46 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using Pr22;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using static System.Net.Mime.MediaTypeNames;
-
 namespace PassportReaderWinService.Classes
 {
 
-    [DataContract(Name = "passport")]
-    public class Passport
+    [DataContract(Name = "DataPage")]
+    public class DataPage
     {
 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Passport" /> class.
+        /// Initializes a new instance of the <see cref="DataPage" /> class.
         /// </summary>
-        /// <param name="ecard">ecard.</param>
-        /// <param name="dataPage">dataPage.</param>
-        //public Passport(IdCardSideEnum? side = default(IdCardSideEnum?), Ecard ecard = default(Ecard), DataPage dataPage = default(DataPage), Image image = default(Image))
-        public Passport(Image image = default(Image), Chip chip = default(Chip))
+        /// <param name="passportFields">passportFields.</param>
+        /// <param name="image">image.</param>
+        public DataPage(List<PassportField> passportFields = default(List<PassportField>), Image image = default(Image))
         {
-            this.Chip = chip;
-            this.DataPage = dataPage;
+
             this.Image = image;
+            this.PassportFields = passportFields;
+
         }
 
 
-        /// <summary>
-        /// Gets or Sets dataPage
-        /// </summary>
-        [DataMember(Name = "dataPage", EmitDefaultValue = false)]
-        public DataPage DataPage { get; set; }
 
-
-        /// <summary>
-        /// Gets or Sets ecards
-        /// </summary>
-        [DataMember(Name = "chip", EmitDefaultValue = false)]
-        public Chip Chip { get; set; }
 
         /// <summary>
         /// Gets or Sets Image
         /// </summary>
         [DataMember(Name = "image", EmitDefaultValue = false)]
         public Image Image { get; set; }
+
+
+        /// <summary>
+        /// Gets or Sets passportFields
+        /// </summary>
+        [DataMember(Name = "passportFields", EmitDefaultValue = false)]
+        public List<PassportField> PassportFields { get; set; }
 
 
         /// <summary>
@@ -59,9 +52,8 @@ namespace PassportReaderWinService.Classes
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class Hand {\n");
-            sb.Append("  Side: ").Append(Side).Append("\n");
-            //sb.Append("  Ecard: ").Append(Ecard).Append("\n");
-            //sb.Append("  DataPage: ").Append(DataPage).Append("\n");
+            sb.Append("  PassportFields: ").Append(PassportFields).Append("\n");
+            sb.Append("  Image: ").Append(Image).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
